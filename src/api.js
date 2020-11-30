@@ -9,7 +9,7 @@ import {
 } from "./redux";
 import {batch} from "react-redux";
 
-const API_URL = 'http://localhost:8000';
+const API_URL = localStorage.getItem('API_URL') ?? 'http://localhost:8000';
 
 const WATCH_LIST = [];
 
