@@ -23,7 +23,7 @@ export function useVirtualized({parentRef, rows, rowSize, rowRender, spacerRende
     const height = parentRef?.current?.clientHeight ?? 0;
 
     const firstItemIdx = Math.max(0, Math.floor(scrollTop / rowSize) - overscan);
-    let lastItemIdx = Math.min(firstItemIdx + Math.ceil(height / rowSize) + 2*overscan, Math.max(0, rows - 1));
+    let lastItemIdx = Math.min(firstItemIdx + Math.ceil(height / rowSize) + 2 * overscan, Math.max(0, rows));
 
     if (lastItemIdx < firstItemIdx) {
         if (parentRef.current) {

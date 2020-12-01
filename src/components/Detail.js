@@ -93,7 +93,7 @@ export function Detail({name, value, setValue, type, image, options, min, max, s
             content = <div className={"text-gray-800 dark:text-gray-200 py-3 px-4 bg-gray-100 dark:bg-gray-900 rounded leading-tight flex items-center"}>
                 {image && <div className={"inline mr-2"}>{image}</div>}
                 {value}
-                {copyAllowed && <IconClipboard/>}
+                {copyAllowed && <IconClipboard copyText={value} />}
             </div>;
     }
 

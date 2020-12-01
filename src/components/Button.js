@@ -7,6 +7,6 @@ export function Button({children, disabled, loading, icon, click}) {
     const actualIcon = loading === true ? <Loader/> : icon;
     return <button type="button"
                    disabled={disabled}
-                   className={"font-bold py-2 px-4 mx-1 rounded inline-flex items-center " + disabledClasses}
+                   className={"font-bold outline-none focus:outline-none py-2 px-4 mx-1 rounded inline-flex items-center " + disabledClasses}
                    onClick={click}>{actualIcon}{children}</button>
 }

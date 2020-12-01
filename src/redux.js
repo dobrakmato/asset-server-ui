@@ -1,5 +1,6 @@
 /* action creators */
 import {createSelector} from "reselect";
+import {searchFilter} from "./serach";
 
 export const sseAssetUpdate = (asset) => ({type: 'sseAssetUpdate', asset})
 export const sseAssetRemoved = (uuid) => ({type: 'sseAssetRemoved', uuid})
@@ -41,7 +42,7 @@ export function rootReducer(state = INITIAL_STATE, action) {
             assets = {...state.assets};
 
             for (let asset of action.assets) {
-                assets[asset.uuid] = asset;
+                assets[asset.uuid] = {...assets[asset.uuid], ...asset};
             }
 
             return {...state, assets};
@@ -54,8 +55,7 @@ export function rootReducer(state = INITIAL_STATE, action) {
             assets = {...state.assets};
 
             for (let uuid of action.dirtyUuids) {
-                assets[uuid] = {...assets[uuid]};
-                assets[uuid].dirty = true;
+                assets[uuid] = {...assets[uuid], dirty: true};
             }
 
             return {...state, assets};
@@ -129,21 +129,7 @@ export const getSortedAssets = createSelector(
 );
 export const getFilteredSortedAssets = createSelector(
     getSortedAssets, getBrowserFilter,
-    (sortedAssets, filter) => sortedAssets.filter(it => {
-        const filterLower = filter.toLowerCase();
-
-        for (const prop of ['name', 'type', 'tags']) {
-            if (it[prop]) {
-                if (typeof it[prop] === 'string' && it[prop].toLowerCase().includes(filterLower)) {
-                    return true;
-                } else if (Array.isArray(it[prop]) && it[prop].some(it => it.toLowerCase().includes(filterLower))) {
-                    return true;
-                }
-            }
-        }
-
-        return false;
-    })
+    (sortedAssets, filter) => sortedAssets.filter(searchFilter(filter))
 )
 
 export const getAsset = (uuid) => (state) => state.assets[uuid]

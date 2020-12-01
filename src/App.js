@@ -1,6 +1,6 @@
 import React, {useEffect, useState} from "react";
 import {compileAll, getAllAssets, getDirtyAssets, subscribeToEvents} from "./api";
-import {useDispatch, useSelector} from "react-redux";
+import {batch, useDispatch, useSelector} from "react-redux";
 import {getFilteredSortedAssets, updateDirtyAssets, updateManyAssets} from "./redux";
 import {StatusBar} from "./components/StatusBar";
 import {Header} from "./components/Header";
@@ -38,10 +38,13 @@ function App() {
     }
 
     useEffect(() => {
-        getAllAssets()
-            .then(it => dispatch(updateManyAssets(it)));
-        getDirtyAssets()
-            .then(it => dispatch(updateDirtyAssets(it)))
+        (async () => {
+            const [assets, dirty] = await Promise.all([getAllAssets(), getDirtyAssets()]);
+            batch(() => {
+                dispatch(updateManyAssets(assets));
+                dispatch(updateDirtyAssets(dirty));
+            });
+        })();
     }, [dispatch])
 
     useEffect(() => subscribeToEvents(dispatch), [dispatch]);

@@ -3,21 +3,37 @@ import {Button} from "./Button";
 import {IconRefresh} from "./IconRefresh";
 import {IconCompile} from "./IconCompile";
 import React, {useState} from "react";
-import {refresh} from "../api";
-import {useDispatch} from "react-redux";
-import {updateBrowserFilter} from "../redux";
+import {getAllAssets, getDirtyAssets, refresh} from "../api";
+import {batch, useDispatch, useSelector} from "react-redux";
+import {getBrowserFilter, updateBrowserFilter, updateDirtyAssets, updateManyAssets} from "../redux";
+import {IconDirty} from "./IconDirty";
 
 export function Header({selected, compileSelected, selectAllHandler}) {
     const dispatch = useDispatch();
+    const filter = useSelector(getBrowserFilter);
     const [isRefreshing, setRefreshing] = useState(false);
 
     const handleSearch = (ev) => {
         dispatch(updateBrowserFilter(ev.target.value));
     };
 
-    const handleRefresh = () => {
+    const showDirty = () => {
+        if (filter.trim() === 'dirty:') {
+            dispatch(updateBrowserFilter(''));
+        } else {
+            dispatch(updateBrowserFilter('dirty:'));
+        }
+    }
+
+    const handleRefresh = async () => {
         setRefreshing(true);
-        refresh().then(_ => setRefreshing(false));
+        await refresh();
+        const [assets, dirty] = await Promise.all([getAllAssets(), getDirtyAssets()]);
+        batch(() => {
+            dispatch(updateManyAssets(assets));
+            dispatch(updateDirtyAssets(dirty));
+        });
+        setRefreshing(false);
     }
 
     return <header className={"flex flex-col fixed top-0 bg-white w-full dark:bg-gray-800"}>
@@ -35,6 +51,8 @@ export function Header({selected, compileSelected, selectAllHandler}) {
                 </div>
             </div>
             <div className={"ml-auto"}>
+                <Button click={showDirty} icon={<div className={"mr-2"}><IconDirty/>
+                </div>}>Show {filter.trim() === 'dirty:' ? 'All' : 'Dirty'}</Button>
                 <Button loading={isRefreshing} icon={<IconRefresh/>} click={handleRefresh}>Refresh</Button>
                 <Button><IconCompile/> Recompile All</Button>
             </div>

@@ -19,6 +19,7 @@ import {IconProperties} from "./IconProperties";
 import {IconInformation} from "./IconInformation";
 import {IconPreview} from "./IconPreview";
 import {Loader} from "./Loader";
+import {IconClipboard} from "./IconClipboard";
 
 export function AssetDetails({openAsset, setOpenAsset}) {
     const dispatch = useDispatch();
@@ -93,7 +94,12 @@ export function AssetDetails({openAsset, setOpenAsset}) {
             <div>
                 <h2 className={"text-xl dark:text-white"}>Asset Details {dirty &&
                 <span className={"font-bold"}>(unsaved changes)</span>}</h2>
-                <Breadcrumbs path={asset.name}/>
+                <div className={"group flex items-center"}>
+                    <Breadcrumbs path={asset.name}/>
+                    <div className={"ml-2"}>
+                        <IconClipboard copyText={asset.name} />
+                    </div>
+                </div>
             </div>
             <div className={"ml-auto flex items-center"}>
                 <div className={"mr-2"}>
@@ -114,6 +120,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                     <div className={"my-4 flex flex-col"}>
                         <Detail name={"UUID"} value={asset.uuid}/>
                         <Detail name={"Type"} image={<AssetTypeIcon type={asset.type}/>} value={asset.type}/>
+                        {asset.input_path && <Detail name={"Source File"} value={asset.input_path}/>}
                         <Detail name={"Updated at"} value={asset.updated_at}/>
                         <Detail name={"Tags"} value={asset.tags.map(it => <Tag key={it} name={it}/>)} type={'custom'}/>
                     </div>
