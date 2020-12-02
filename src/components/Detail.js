@@ -66,7 +66,7 @@ export function Detail({name, value, setValue, type, image, options, min, max, s
                     step={step}
                     onChange={(e) => updateValue(parseFloat(e.target.value))}
                     value={value === null ? '' : value}/>
-                <span className={"ml-4"}>{rangeVal}</span>
+                <span className={"ml-4 dark:text-gray-200"}>{rangeVal}</span>
             </div>;
             break;
         case 'select':
