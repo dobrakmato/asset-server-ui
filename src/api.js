@@ -51,6 +51,10 @@ export async function getAssetCompilations(uuid) {
         .then(it => it.json())
 }
 
+export function getAssetPreviewUrl(uuid) {
+    return `${API_URL}/assets/${uuid}/preview`;
+}
+
 export async function compileAll(uuids) {
     return fetch(`${API_URL}/compile`, {
         method: 'POST',

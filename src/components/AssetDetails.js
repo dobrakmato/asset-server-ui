@@ -5,7 +5,7 @@ import {Breadcrumbs} from "./Breadcrumbs";
 import {CloseButton} from "./CloseButton";
 import {Tag} from "./Tag";
 import {Compilations} from "./Compilations";
-import {compileAll, getAssetCompilations, ignoreAsset, updateAsset, watchAsset} from "../api";
+import {compileAll, getAssetCompilations, getAssetPreviewUrl, ignoreAsset, updateAsset, watchAsset} from "../api";
 import {useKeyDown, useKeyUp} from "../hooks/useKeyUp";
 import {durationToSeconds} from "../utility";
 import {Detail} from "./Detail";
@@ -97,7 +97,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                 <div className={"group flex items-center"}>
                     <Breadcrumbs path={asset.name}/>
                     <div className={"ml-2"}>
-                        <IconClipboard copyText={asset.name} />
+                        <IconClipboard copyText={asset.name}/>
                     </div>
                 </div>
             </div>
@@ -158,7 +158,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                          className={"bg-gray-100 dark:bg-gray-900 w-full flex items-center justify-center rounded"}>
                         {isLoadingPreview && <Loader className={"w-5 h-5 mr-2 text-gray-300"}/>}
                         {!isLoadingPreview && <img alt={"preview"} className={"w-full rounded"}
-                                                   src={"https://i.pinimg.com/originals/a0/3f/c0/a03fc0c460dec4a47ee0794f1bc2c869.png"}/>}
+                                                   src={getAssetPreviewUrl(asset.uuid)}/>}
                     </div>
                     {!isLoadingPreview &&
                     <p className={"text-gray-400 uppercase tracking-wide text-xs mt-2"}>2048x2048, 10 mips, 5.30 MB</p>}
