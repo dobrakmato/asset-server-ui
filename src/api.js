@@ -46,6 +46,12 @@ export async function updateAsset(uuid, asset) {
     }).then(it => it.json())
 }
 
+export async function deleteAsset(uuid) {
+    return fetch(`${API_URL}/assets/${uuid}`, {
+        method: 'DELETE'
+    }).then(it => it.json())
+}
+
 export async function getAssetCompilations(uuid) {
     return fetch(`${API_URL}/assets/${uuid}/compilations`)
         .then(it => it.json())

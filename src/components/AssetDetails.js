@@ -5,7 +5,7 @@ import {Breadcrumbs} from "./Breadcrumbs";
 import {CloseButton} from "./CloseButton";
 import {Tag} from "./Tag";
 import {Compilations} from "./Compilations";
-import {compileAll, getAssetCompilations, ignoreAsset, updateAsset, watchAsset} from "../api";
+import {compileAll, deleteAsset, getAssetCompilations, ignoreAsset, updateAsset, watchAsset} from "../api";
 import {useKeyDown, useKeyUp} from "../hooks/useKeyUp";
 import {durationToSeconds} from "../utility";
 import {Detail} from "./Detail";
@@ -20,6 +20,7 @@ import {IconInformation} from "./IconInformation";
 import {IconPreview} from "./IconPreview";
 import {IconClipboard} from "./IconClipboard";
 import {Preview} from "./Preview";
+import {IconTrash} from "./IconTrash";
 
 export function AssetDetails({openAsset, setOpenAsset}) {
     const dispatch = useDispatch();
@@ -66,6 +67,11 @@ export function AssetDetails({openAsset, setOpenAsset}) {
             .then(_ => setSaving(false));
     }, [openAsset, changes]);
 
+    const untrackAsset = useCallback(() => {
+        deleteAsset(openAsset);
+        setOpenAsset(null);
+    }, [openAsset, setOpenAsset]);
+
     const compileSelf = useCallback(() => {
         setCompiling(true);
         compileAll([openAsset]);
@@ -101,9 +107,13 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                     <PrimaryButton disabled={!dirty} loading={isSaving} icon={<IconSave/>}
                                    click={save}>Save</PrimaryButton>
                 </div>
-                <div className={"mr-8"}>
+                <div className={"mr-2"}>
                     <Button loading={isActuallyCompiling} icon={<IconCompile/>} click={compileSelf}>Compile</Button>
                 </div>
+                <div className={"mr-8"}>
+                    <Button icon={<IconTrash/>} click={untrackAsset}>Delete</Button>
+                </div>
+
                 <CloseButton click={() => setOpenAsset(null)}/>
             </div>
         </div>
