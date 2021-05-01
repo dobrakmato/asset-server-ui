@@ -3,13 +3,13 @@ import {getAssetPreviewUrl} from "../api";
 import {useEffect, useMemo, useState} from "react";
 import {IconX} from "./IconX";
 
-export function Preview({uuid}) {
+export function Preview({uuid, randomId}) {
     const [isLoadingPreview, setLoadingPreview] = useState(true);
     const [isError, setError] = useState(false);
     const [src, setSrc] = useState('');
     const [details, setDetails] = useState('');
 
-    const previewUrl = useMemo(() => getAssetPreviewUrl(uuid), [uuid]);
+    const previewUrl = useMemo(() => getAssetPreviewUrl(uuid) + "?" + randomId, [uuid, randomId]);
 
     useEffect(() => {
         if (!previewUrl) return;

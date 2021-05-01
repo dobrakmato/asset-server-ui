@@ -174,7 +174,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                     <IconPreview/> Preview</h3>
 
                 <div className={"my-4 flex flex-col"}>
-                    <Preview uuid={asset.uuid}/>
+                    <Preview uuid={asset.uuid} randomId={encodeURIComponent(compilations?.[0]?.timestamp)}/>
                 </div>
 
             </div>
