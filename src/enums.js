@@ -30,4 +30,5 @@ export const INDEX_TYPES = [
 export const BLEND_MODES = [
     {value: "Opaque", title: "Opaque"},
     {value: "Masked", title: "Masked"},
+    {value: "Translucent", title: "Translucent"},
 ];

@@ -43,8 +43,27 @@ export function MaterialImportSettings({changes, setValue}) {
             max={1}
             step={0.01}
             optional={true}/>
+        {changes['blend_mode'] === 'Translucent' && <Detail
+            type={"range"}
+            name={"Opacity"}
+            value={changes['opacity']}
+            setValue={(v) => setValue('opacity', v)}
+            min={0.01}
+            max={1}
+            step={0.01}
+            optional={true}/>}
+        {changes['blend_mode'] === 'Translucent' && <Detail
+            type={"range"}
+            name={"IOR"}
+            value={changes['ior']}
+            setValue={(v) => setValue('ior', v)}
+            min={0.01}
+            max={3}
+            step={0.01}
+            optional={true}/>}
 
-        <h3 className={"font-bold text-lg mt-4 text-gray-800 dark:text-gray-200 flex items-center"}><IconReference/> References Assets</h3>
+        <h3 className={"font-bold text-lg mt-4 text-gray-800 dark:text-gray-200 flex items-center"}>
+            <IconReference/> Referenced Assets</h3>
 
         <Detail
             name={"Albedo Map"}
