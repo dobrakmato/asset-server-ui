@@ -5,7 +5,15 @@ import {Breadcrumbs} from "./Breadcrumbs";
 import {CloseButton} from "./CloseButton";
 import {Tag} from "./Tag";
 import {Compilations} from "./Compilations";
-import {compileAll, deleteAsset, getAssetCompilations, ignoreAsset, updateAsset, watchAsset} from "../api";
+import {
+    compileAll,
+    deleteAsset,
+    getAssetCompilations,
+    ignoreAsset,
+    openExternalEditor,
+    updateAsset,
+    watchAsset
+} from "../api";
 import {useKeyDown, useKeyUp} from "../hooks/useKeyUp";
 import {durationToSeconds} from "../utility";
 import {Detail} from "./Detail";
@@ -21,6 +29,7 @@ import {IconPreview} from "./IconPreview";
 import {IconClipboard} from "./IconClipboard";
 import {Preview} from "./Preview";
 import {IconTrash} from "./IconTrash";
+import {IconPencil} from "./IconPencil";
 
 export function AssetDetails({openAsset, setOpenAsset}) {
     const dispatch = useDispatch();
@@ -29,6 +38,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
     const [isLoadingCompilations, setLoadingCompilations] = useState(true);
     const [isSaving, setSaving] = useState(false);
     const [isCompiling, setCompiling] = useState(false);
+    const [wasCompiling, setWasCompiling] = useState(false);
     const [dirty, setDirty] = useState(false);
     const [changes, setChanges] = useState(assetWithoutCompilations);
 
@@ -72,6 +82,8 @@ export function AssetDetails({openAsset, setOpenAsset}) {
         setOpenAsset(null);
     }, [openAsset, setOpenAsset]);
 
+    const edit = useCallback(() => openExternalEditor(openAsset), [openAsset]);
+
     const compileSelf = useCallback(() => {
         setCompiling(true);
         compileAll([openAsset]);
@@ -109,6 +121,9 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                 </div>
                 <div className={"mr-2"}>
                     <Button loading={isActuallyCompiling} icon={<IconCompile/>} click={compileSelf}>Compile</Button>
+                </div>
+                <div className={"mr-2"}>
+                    <Button icon={<IconPencil/>} click={edit}>Edit</Button>
                 </div>
                 <div className={"mr-8"}>
                     <Button icon={<IconTrash/>} click={untrackAsset}>Delete</Button>

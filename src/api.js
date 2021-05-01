@@ -46,6 +46,12 @@ export async function updateAsset(uuid, asset) {
     }).then(it => it.json())
 }
 
+export async function openExternalEditor(uuid) {
+    return fetch(`${API_URL}/assets/${uuid}/open`, {
+        method: 'POST'
+    }).then(it => it.json())
+}
+
 export async function deleteAsset(uuid) {
     return fetch(`${API_URL}/assets/${uuid}`, {
         method: 'DELETE'
