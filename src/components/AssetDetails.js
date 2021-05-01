@@ -145,7 +145,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                 {compilations?.[0]?.error && <>
                     <h3 className={"font-bold text-lg mt-4 text-gray-800 dark:text-gray-200"}>Last Compilation
                         Error</h3>
-                    <pre className={"overflow-auto"}>
+                    <pre className={"overflow-auto dark:text-gray-100"}>
                     {compilations?.[0].error}
                     </pre>
                 </>}
