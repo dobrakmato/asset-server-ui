@@ -3,10 +3,11 @@ import {Button} from "./Button";
 import {IconRefresh} from "./IconRefresh";
 import {IconCompile} from "./IconCompile";
 import React, {useState} from "react";
-import {getAllAssets, getDirtyAssets, refresh} from "../api";
+import {getAllAssets, getDirtyAssets, openLibraryRoot, refresh} from "../api";
 import {batch, useDispatch, useSelector} from "react-redux";
 import {getBrowserFilter, updateBrowserFilter, updateDirtyAssets, updateManyAssets} from "../redux";
 import {IconDirty} from "./IconDirty";
+import {IconFolder} from "./IconFolder";
 
 export function Header({selected, compileSelected, selectAllHandler}) {
     const dispatch = useDispatch();
@@ -36,6 +37,8 @@ export function Header({selected, compileSelected, selectAllHandler}) {
         setRefreshing(false);
     }
 
+    const openLibrary = async () => await openLibraryRoot();
+
     return <header className={"flex flex-col fixed top-0 bg-white w-full dark:bg-gray-800"}>
         <div className={"border-b border-gray-200 dark:border-gray-600"}>
             <SearchInput type={"text"} focusKey={'/'} onChange={handleSearch}
@@ -55,6 +58,7 @@ export function Header({selected, compileSelected, selectAllHandler}) {
                 </div>}>Show {filter.trim() === 'dirty:' ? 'All' : 'Dirty'}</Button>
                 <Button loading={isRefreshing} icon={<IconRefresh/>} click={handleRefresh}>Refresh</Button>
                 <Button><IconCompile/> Recompile All</Button>
+                <Button click={openLibrary}><IconFolder/> Open Library</Button>
             </div>
         </div>
     </header>;

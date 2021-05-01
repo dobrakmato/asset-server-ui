@@ -67,6 +67,10 @@ export async function refresh() {
     return fetch(`${API_URL}/refresh`, {method: 'POST'}).then(it => it.json())
 }
 
+export async function openLibraryRoot() {
+    return fetch(`${API_URL}/open/root`, {method: 'POST'}).then(it => it.json())
+}
+
 export function subscribeToEvents(dispatch) {
     // this is to prevent server from ddos-ing our application by requesting 1000 of renders
     const dispatcherInterval = 250;
