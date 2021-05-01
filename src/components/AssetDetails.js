@@ -5,7 +5,7 @@ import {Breadcrumbs} from "./Breadcrumbs";
 import {CloseButton} from "./CloseButton";
 import {Tag} from "./Tag";
 import {Compilations} from "./Compilations";
-import {compileAll, getAssetCompilations, getAssetPreviewUrl, ignoreAsset, updateAsset, watchAsset} from "../api";
+import {compileAll, getAssetCompilations, ignoreAsset, updateAsset, watchAsset} from "../api";
 import {useKeyDown, useKeyUp} from "../hooks/useKeyUp";
 import {durationToSeconds} from "../utility";
 import {Detail} from "./Detail";
@@ -18,15 +18,14 @@ import {IconCompile} from "./IconCompile";
 import {IconProperties} from "./IconProperties";
 import {IconInformation} from "./IconInformation";
 import {IconPreview} from "./IconPreview";
-import {Loader} from "./Loader";
 import {IconClipboard} from "./IconClipboard";
+import {Preview} from "./Preview";
 
 export function AssetDetails({openAsset, setOpenAsset}) {
     const dispatch = useDispatch();
     const asset = useSelector(getAsset(openAsset));
     const {compilations, ...assetWithoutCompilations} = asset;
     const [isLoadingCompilations, setLoadingCompilations] = useState(true);
-    const [isLoadingPreview, setLoadingPreview] = useState(true);
     const [isSaving, setSaving] = useState(false);
     const [isCompiling, setCompiling] = useState(false);
     const [dirty, setDirty] = useState(false);
@@ -77,10 +76,6 @@ export function AssetDetails({openAsset, setOpenAsset}) {
             setCompiling(false);
         }
     }, [asset]);
-
-    useEffect(() => {
-        setTimeout(() => setLoadingPreview(false), 500);
-    }, []);
 
     const isActuallyCompiling = isCompiling || asset?.compilationStatus?.type === 'Compiling' || asset?.compilationStatus?.type === 'Queued';
 
@@ -154,14 +149,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                     <IconPreview/> Preview</h3>
 
                 <div className={"my-4 flex flex-col"}>
-                    <div style={{minHeight: '30rem'}}
-                         className={"bg-gray-100 dark:bg-gray-900 w-full flex items-center justify-center rounded"}>
-                        {isLoadingPreview && <Loader className={"w-5 h-5 mr-2 text-gray-300"}/>}
-                        {!isLoadingPreview && <img alt={"preview"} className={"w-full rounded"}
-                                                   src={getAssetPreviewUrl(asset.uuid)}/>}
-                    </div>
-                    {!isLoadingPreview &&
-                    <p className={"text-gray-400 uppercase tracking-wide text-xs mt-2"}>2048x2048, 10 mips, 5.30 MB</p>}
+                    <Preview uuid={asset.uuid}/>
                 </div>
 
             </div>
