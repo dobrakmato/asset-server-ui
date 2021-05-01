@@ -20,7 +20,7 @@ export const updateBrowserSort = (sortBy, direction) => ({type: 'updateBrowserSo
 /* initial state */
 const INITIAL_STATE = {
     assets: {},
-    status: 'Disconnected',
+    status: 'Connecting',
     compiler: {
         eta: 0,
         concurrency: 0,

@@ -1,15 +1,17 @@
 import React, {useEffect, useState} from "react";
 import {compileAll, getAllAssets, getDirtyAssets, subscribeToEvents} from "./api";
 import {batch, useDispatch, useSelector} from "react-redux";
-import {getFilteredSortedAssets, updateDirtyAssets, updateManyAssets} from "./redux";
+import {getFilteredSortedAssets, getStatus, updateDirtyAssets, updateManyAssets} from "./redux";
 import {StatusBar} from "./components/StatusBar";
 import {Header} from "./components/Header";
 import {AssetBrowser} from "./components/AssetBrowser";
 import {AssetDetails} from "./components/AssetDetails";
+import {FatalErrorOverlay} from "./components/FatalErrorOverlay";
 
 function App() {
     const dispatch = useDispatch();
     const assets = useSelector(getFilteredSortedAssets);
+    const status = useSelector(getStatus);
 
     const [openAsset, setOpenAsset] = useState(null);
     const [selected, setSelected] = useState([]);
@@ -56,6 +58,9 @@ function App() {
             {openAsset && <AssetDetails openAsset={openAsset} setOpenAsset={setOpenAsset}/>}
         </main>
         <StatusBar/>
+        {status === 'Disconnected' && <FatalErrorOverlay
+            title={"Connection interrupted!"}
+            message={"The connection to asset server has been interrupted. To prevent user interface from becoming out of sync we disabled the application. Please refresh the window to reconnect to the server. Sorry for the inconvenience."}/>}
     </>;
 }
 
