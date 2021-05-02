@@ -58,7 +58,7 @@ export function Header({selected, compileSelected, selectAllHandler}) {
                 </div>}>Show {filter.trim() === 'dirty:' ? 'All' : 'Dirty'}</Button>
                 <Button loading={isRefreshing} icon={<IconRefresh/>} click={handleRefresh}>Refresh</Button>
                 <Button><IconCompile/> Recompile All</Button>
-                <Button click={openLibrary}><IconFolder/> Open Library</Button>
+                <Button click={openLibrary} icon={<IconFolder/>} fakeLoad={true}>Open Library</Button>
             </div>
         </div>
     </header>;

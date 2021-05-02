@@ -123,7 +123,7 @@ export function AssetDetails({openAsset, setOpenAsset}) {
                     <Button loading={isActuallyCompiling} icon={<IconCompile/>} click={compileSelf}>Compile</Button>
                 </div>
                 <div className={"mr-2"}>
-                    <Button icon={<IconPencil/>} click={edit}>Edit</Button>
+                    <Button icon={<IconPencil/>} fakeLoad={true} click={edit}>Edit</Button>
                 </div>
                 <div className={"mr-8"}>
                     <Button icon={<IconTrash/>} click={untrackAsset}>Delete</Button>
