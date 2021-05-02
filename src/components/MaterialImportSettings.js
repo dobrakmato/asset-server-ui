@@ -66,38 +66,52 @@ export function MaterialImportSettings({changes, setValue}) {
             <IconReference/> Referenced Assets</h3>
 
         <Detail
+            type={'asset'}
             name={"Albedo Map"}
             value={changes['albedo_map']}
+            setValue={(v) => setValue('albedo_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Normal Map"}
             value={changes['normal_map']}
+            setValue={(v) => setValue('normal_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Displacement Map"}
             value={changes['displacement_map']}
+            setValue={(v) => setValue('displacement_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Roughness Map"}
             value={changes['roughness_map']}
+            setValue={(v) => setValue('roughness_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Ambient Occlusion Map"}
             value={changes['ao_map']}
+            setValue={(v) => setValue('ao_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Metallic Map"}
             value={changes['metallic_map']}
+            setValue={(v) => setValue('metallic_map', v)}
             optional={true}/>
 
         <Detail
+            type={'asset'}
             name={"Opacity Map"}
             value={changes['opacity_map']}
+            setValue={(v) => setValue('opacity_map', v)}
             optional={true}/>
     </div>;
 

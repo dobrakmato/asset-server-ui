@@ -39,6 +39,18 @@ export function Detail({name, value, setValue, type, image, options, min, max, s
         case 'text':
             content = input('text');
             break;
+        case 'asset':
+            content = <div className={"flex items-center"}>
+                {optional && checkbox}
+                <input
+                    className={"text-gray-800 dark:text-gray-200 py-3 px-4 bg-gray-100 dark:bg-gray-900 rounded leading-tight flex items-center w-full"}
+                    disabled={!enabled}
+                    onChange={(e) => updateValue(e.target.value.trim())}
+                    type={'text'}
+                    value={value === null ? '' : value}
+                />
+            </div>;
+            break;
         case 'number':
             content = input('number');
             break;
@@ -90,15 +102,17 @@ export function Detail({name, value, setValue, type, image, options, min, max, s
             </div>
             break;
         default:
-            content = <div className={"text-gray-800 dark:text-gray-200 py-3 px-4 bg-gray-100 dark:bg-gray-900 rounded leading-tight flex items-center"}>
+            content = <div
+                className={"text-gray-800 dark:text-gray-200 py-3 px-4 bg-gray-100 dark:bg-gray-900 rounded leading-tight flex items-center"}>
                 {image && <div className={"inline mr-2"}>{image}</div>}
                 {value}
-                {copyAllowed && <IconClipboard copyText={value} />}
+                {copyAllowed && <IconClipboard copyText={value}/>}
             </div>;
     }
 
     return <div className={"my-2 group w-full"}>
-        <label className={"block uppercase tracking-wide text-gray-700 dark:text-gray-400 text-xs font-bold mb-1"}>{name}</label>
+        <label
+            className={"block uppercase tracking-wide text-gray-700 dark:text-gray-400 text-xs font-bold mb-1"}>{name}</label>
         {content}
     </div>
 }
