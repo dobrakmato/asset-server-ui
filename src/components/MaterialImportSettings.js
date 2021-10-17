@@ -43,6 +43,15 @@ export function MaterialImportSettings({changes, setValue}) {
             max={1}
             step={0.01}
             optional={true}/>
+        <Detail
+            type={"range"}
+            name={"SSS Strength"}
+            value={changes['sss']}
+            setValue={(v) => setValue('sss', v)}
+            min={0}
+            max={1}
+            step={0.01}
+            optional={true}/>
         {changes['blend_mode'] === 'Translucent' && <Detail
             type={"range"}
             name={"Opacity"}
